@@ -3,7 +3,7 @@
 A utility to flatten adult video scene directories
 Will work from an input directory and move all files below the parent subfolders to the parent subfolder, and delete any trash files (configurable in flatten-config.json)
 
-##ARGUMENTS:
+## ARGUMENTS:
 
 
 -h, --help: Prints this help text
@@ -14,7 +14,7 @@ Will work from an input directory and move all files below the parent subfolders
 
 -d <dir>, --directory <dir>: Pass the working directory to the program with this argument.
   
-##EXAMPLE:
+## EXAMPLE:
 
 
 flatten -s -v -d /folder/xxxclips
