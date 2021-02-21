@@ -47,7 +47,7 @@ def printDirectoryFiles (directory: str, root: str):
                     removefile += 1
 
             for v in extensions['files-to-move']:
-                if Path(full_path).suffix == "." + v:
+                if Path(full_path).suffix == "." + v and (os.path.abspath(directory) != os.path.abspath(rootdir)):
                     if not simulate:
                         try:
                             print(
@@ -60,6 +60,8 @@ def printDirectoryFiles (directory: str, root: str):
                         print(
                             f">>> Would move file:\n    {full_path}\n    to {os.path.join(rootdir, os.path.basename(full_path))}")
                     movefile += 1
+                elif os.path.abspath(directory) == os.path.abspath(rootdir):
+                    print(f"~~~ Not moving {full_path},\n    already placed correctly")
         else:
             if not simulate:
                 try:
