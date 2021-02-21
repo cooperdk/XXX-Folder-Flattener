@@ -26,31 +26,31 @@ def printDirectoryFiles(directory: str, root: str):
                 if Path(full_path).suffix == "."+i:
                     if not simulate:
                         try:
-                            print(f"--- Removing file:\n{full_path}")
+                            print(f"--- Removing file:\n    {full_path}")
                             os.remove(full_path)
                         except IOError as exc:
                             print(f"!!! Error: {exc}")
                             pass
                     else:
-                        print(f"--- Would remove file:\n{full_path}")
+                        print(f"--- Would remove file:\n    {full_path}")
                     removefile += 1
             for v in extensions['files-to-move']:
                 if Path(full_path).suffix == "."+v:
                     if not simulate:
                         try:
-                            print(f">>> Moving file:\n{full_path}\nto {os.path.join(rootdir,os.path.basename(full_path))}")
+                            print(f">>> Moving file:\n    {full_path}\n    to {os.path.join(rootdir,os.path.basename(full_path))}")
                             shutil.move(full_path, os.path.join(rootdir,os.path.basename(full_path)))
                         except OSError as exc:
                             print(f"!!! Error: {exc}")
                             pass                   
                     else:
-                        print(f">>> Would move file:\n{full_path}\nto {os.path.join(rootdir,os.path.basename(full_path))}")
+                        print(f">>> Would move file:\n    {full_path}\n    to {os.path.join(rootdir,os.path.basename(full_path))}")
                     movefile += 1
         else:
             #if not os.listdir(full_path):
             if not simulate:
                 try:
-                    print(f"--- Removing dir:\n{full_path} (force: {forcermdir})")
+                    print(f"--- Removing dir:\n    {full_path} (force: {forcermdir})")
                     if forcermdir:
                         shutil.rmdir(full_path)
                     else:
@@ -61,7 +61,7 @@ def printDirectoryFiles(directory: str, root: str):
                     pathnotdel += 1
                     pass
             else:
-                print(f"--- Would remove dir:\n{full_path} (force: {forcermdir})")
+                print(f"--- Would remove dir:\n    {full_path} (force: {forcermdir})")
                 removepath += 1
             #else:
                 #print("!!! Not able to delete dir:\n{full_path} (dir is not empty)")
@@ -79,7 +79,7 @@ def checkFolders(directory: str):
     #print(dir_list)
 
     for dir in dir_list:           
-        print(f"\n*** Now in root dir -> {dir}")
+        print(f"\n*** Now in a new parent directory -> {dir}")
         root = os.path.abspath(os.path.join(directory,dir))
         checkSubFolders(os.path.abspath(os.path.join(directory,dir)), root) 
 
@@ -95,7 +95,7 @@ def checkSubFolders(directory: str, root: str):
     #print(dir_list)
 
     for dir in dir_list:           
-        print(f"\n*** Now in sub dir -> {dir}")
+        print(f"\n*** Now in subdirectory -> {dir}")
         checkSubFolders(directory +"/"+ dir, root) 
 
     printDirectoryFiles(directory, root)       
