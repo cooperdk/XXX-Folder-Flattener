@@ -18,7 +18,6 @@ def printDirectoryFiles(directory: str, root: str):
     rootdir = root
     extensions = getConfig()
     #print("")
-    #print(f"Simulate: {simulate}")
     for filename in os.listdir(directory):  
         full_path=os.path.abspath(os.path.join(directory, filename))
         if not os.path.isdir(full_path):
@@ -26,29 +25,41 @@ def printDirectoryFiles(directory: str, root: str):
             for i in extensions['remove-files']:
                 if Path(full_path).suffix == "."+i:
                     if not simulate:
-                        os.remove(full_path)
-                        print(f"--- Removed file:\n{full_path}")
+                        try:
+                            print(f"--- Removing file:\n{full_path}")
+                            os.remove(full_path)
+                        except IOError as exc:
+                            print(f"!!!Error: {exc}")
+                            pass
                     else:
                         print(f"--- Would remove file:\n{full_path}")
                     removefile += 1
             for v in extensions['files-to-move']:
                 if Path(full_path).suffix == "."+v:
                     if not simulate:
-                        shutil.move(full_path, os.path.join(rootdir,os.path.basename(full_path)))
-                        print(f">>> Moved file:\n{full_path}\nto {os.path.join(rootdir,os.path.basename(full_path))}")
+                        try:
+                            print(f">>> Moving file:\n{full_path}\nto {os.path.join(rootdir,os.path.basename(full_path))}")
+                            shutil.move(full_path, os.path.join(rootdir,os.path.basename(full_path)))
+                        except OSError as exc:
+                            print(f"!!!Error: {exc}")
+                            pass                   
                     else:
                         print(f">>> Would move file:\n{full_path}\nto {os.path.join(rootdir,os.path.basename(full_path))}")
                     movefile += 1
         else:
             if not os.listdir(full_path):
                 if not simulate:
-                    os.rmdir(full_path)
-                    print(f"--- Removed dir:\n{full_path}")
+                    try:
+                        print(f"--- Removing dir:\n{full_path}")
+                        os.rmdir(full_path)
+                    except IOError as exc:
+                        print(f"!!!Error: {exc}")
+                        pass
                 else:
                     print(f"--- Would remove dir:\n{full_path}")
                 removepath += 1
             else:
-                print("Not able to delete dir:\n{full_path}")
+                print("!!! Not able to delete dir:\n{full_path} (dir is not empty)")
                 pathnotdel += 1
 
 def checkFolders(directory: str):
@@ -63,7 +74,7 @@ def checkFolders(directory: str):
     #print(dir_list)
 
     for dir in dir_list:           
-        print(f"\nTHIS ROOT IS -> {dir}")
+        print(f"\n*** Now in root dir -> {dir}")
         root = os.path.abspath(os.path.join(directory,dir))
         checkSubFolders(os.path.abspath(os.path.join(directory,dir)), root) 
 
@@ -79,7 +90,7 @@ def checkSubFolders(directory: str, root: str):
     #print(dir_list)
 
     for dir in dir_list:           
-        print(f"\nTHIS SUBDIR IS -> {dir}")
+        print(f"\n*** Now in sub dir -> {dir}")
         checkSubFolders(directory +"/"+ dir, root) 
 
     printDirectoryFiles(directory, root)       
@@ -161,5 +172,3 @@ else:
     print(f"- Moved {movefile} video scenes.")
     print(f"- Removed {removefile} trash files and {removepath} subfolders.")
     print(f"- Not able to remove {pathnotdel} subfolders.")
-
-#input("Press enter to exit ;")
