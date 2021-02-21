@@ -3,7 +3,6 @@ from pathlib import Path
 import json
 import shutil
 
-
 def getConfig() -> dict:
 # This function reads the trash file extensions from JSON
     thisdir = os.path.dirname(__file__)
