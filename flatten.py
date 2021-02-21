@@ -29,7 +29,7 @@ def printDirectoryFiles(directory: str, root: str):
                             print(f"--- Removing file:\n{full_path}")
                             os.remove(full_path)
                         except IOError as exc:
-                            print(f"!!!Error: {exc}")
+                            print(f"!!! Error: {exc}")
                             pass
                     else:
                         print(f"--- Would remove file:\n{full_path}")
@@ -41,7 +41,7 @@ def printDirectoryFiles(directory: str, root: str):
                             print(f">>> Moving file:\n{full_path}\nto {os.path.join(rootdir,os.path.basename(full_path))}")
                             shutil.move(full_path, os.path.join(rootdir,os.path.basename(full_path)))
                         except OSError as exc:
-                            print(f"!!!Error: {exc}")
+                            print(f"!!! Error: {exc}")
                             pass                   
                     else:
                         print(f">>> Would move file:\n{full_path}\nto {os.path.join(rootdir,os.path.basename(full_path))}")
@@ -57,7 +57,7 @@ def printDirectoryFiles(directory: str, root: str):
                         os.rmdir(full_path)
                     removepath += 1
                 except (IOError, OSerror) as exc:
-                    print(f"!!!Error: {exc}")
+                    print(f"!!! Error: {exc}")
                     pathnotdel += 1
                     pass
             else:
