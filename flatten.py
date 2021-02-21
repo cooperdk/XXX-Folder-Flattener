@@ -61,7 +61,7 @@ def printDirectoryFiles (directory: str, root: str):
                             f">>> Would move file:\n    {full_path}\n    to {os.path.join(rootdir, os.path.basename(full_path))}")
                     movefile += 1
                 elif Path(full_path).suffix == "." + v and (os.path.abspath(directory) == os.path.abspath(rootdir)):
-                    print(f"~~~ Not moving {full_path},\n    already placed correctly")
+                    print(f"~~~ Not moving {full_path}\n    (already placed correctly)")
         else:
             if not simulate:
                 try:
