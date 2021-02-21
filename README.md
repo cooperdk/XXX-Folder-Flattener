@@ -67,6 +67,6 @@ flatten -s -v -d /folder/xxxclips
 (will simulate traversal of /folder/xxxclips and print verbose output.
 
 
-Some functionality not yet done, verbosity will print out a huge load of text.
+Some functionality not yet done, the program always runs in verbose mode currently, and verbosity will print out a lot of text.
 
-The utility prints statistics when done.
+The utility prints statistics about what it did when it is finished.
