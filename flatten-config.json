@@ -1,0 +1,32 @@
+{
+   "__comment__":
+   "This file is the configuration for the tool. Extensions must be without a leading dot (.)",
+   
+   "files-to-move":[
+      "mp4",
+      "avi",
+      "mov",
+      "flv",
+      "rm",
+      "wmv",
+      "mov",
+      "m4v",
+      "mpg",
+      "mpeg",
+      "mkv",
+	  "asf"
+   ],
+   "remove-files":[
+      "txt",
+      "nfo",
+      "diz",
+      "sfv",
+      "par",
+      "exe",
+      "!ut",
+      "!bt",
+      "sfv",
+	  "idx",
+      "torrent"
+   ]
+}
