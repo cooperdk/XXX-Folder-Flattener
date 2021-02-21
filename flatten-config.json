@@ -14,7 +14,7 @@
       "mpg",
       "mpeg",
       "mkv",
-	  "asf"
+      "asf"
    ],
    "remove-files":[
       "txt",
@@ -26,7 +26,7 @@
       "!ut",
       "!bt",
       "sfv",
-	  "idx",
+      "idx",
       "torrent"
    ]
 }
