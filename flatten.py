@@ -173,7 +173,7 @@ for current_argument, current_value in arguments:
 checkFolders(path)
 print("")
 if simulate:
-    print(f"If you had not simulated this operation, Flatten would have:")
+    print(f"If you had not simulated this operation, Flatten would have done this:")
     print(f"- Moved {movefile} video scenes.")
     print(f"- Removed {removefile} trash files and {removepath} subfolders (if possible).")
     #print(f"- Not able to remove {pathnotdel} subfolders.")
