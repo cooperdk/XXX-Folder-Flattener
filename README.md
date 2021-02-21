@@ -4,7 +4,7 @@
 
 #### Will work from an input directory and move all files below the parent subfolders to the parent subfolder, and delete any trash files (configurable in flatten-config.json)
 
-[https://github.com/cooperdk/XXX-Folder-Flattener/releases](Compiled version here)
+[Compiled version here](https://github.com/cooperdk/XXX-Folder-Flattener/releases)
 
 ## ARGUMENTS:
 
