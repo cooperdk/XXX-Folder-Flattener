@@ -14,7 +14,7 @@ def getConfig() -> dict:
     return configuration
 
 def printDirectoryFiles(directory: str, root: str):
-    global removefile, movefile, removepath, pathnotdel, simulate, verbose
+    global removefile, movefile, removepath, pathnotdel, simulate, verbose, forcermdir
     rootdir = root
     extensions = getConfig()
     #print("")
@@ -29,7 +29,7 @@ def printDirectoryFiles(directory: str, root: str):
                             print(f"--- Removing file:\n{full_path}")
                             os.remove(full_path)
                         except IOError as exc:
-                            print(f"!!! Error: {exc}")
+                            print(f"!!!Error: {exc}")
                             pass
                     else:
                         print(f"--- Would remove file:\n{full_path}")
@@ -41,26 +41,31 @@ def printDirectoryFiles(directory: str, root: str):
                             print(f">>> Moving file:\n{full_path}\nto {os.path.join(rootdir,os.path.basename(full_path))}")
                             shutil.move(full_path, os.path.join(rootdir,os.path.basename(full_path)))
                         except OSError as exc:
-                            print(f"!!! Error: {exc}")
+                            print(f"!!!Error: {exc}")
                             pass                   
                     else:
                         print(f">>> Would move file:\n{full_path}\nto {os.path.join(rootdir,os.path.basename(full_path))}")
                     movefile += 1
         else:
-            if not os.listdir(full_path):
-                if not simulate:
-                    try:
-                        print(f"--- Removing dir:\n{full_path}")
+            #if not os.listdir(full_path):
+            if not simulate:
+                try:
+                    print(f"--- Removing dir:\n{full_path} (force: {forcermdir})")
+                    if forcermdir:
+                        shutil.rmdir(full_path)
+                    else:
                         os.rmdir(full_path)
-                    except IOError as exc:
-                        print(f"!!! Error: {exc}")
-                        pass
-                else:
-                    print(f"--- Would remove dir:\n{full_path}")
-                removepath += 1
+                    removepath += 1
+                except (IOError, OSerror) as exc:
+                    print(f"!!!Error: {exc}")
+                    pathnotdel += 1
+                    pass
             else:
-                print("!!! Warn: Not able to delete dir:\n{full_path} (dir is not empty)")
-                pathnotdel += 1
+                print(f"--- Would remove dir:\n{full_path} (force: {forcermdir})")
+                removepath += 1
+            #else:
+                #print("!!! Not able to delete dir:\n{full_path} (dir is not empty)")
+                #pathnotdel += 1
 
 def checkFolders(directory: str):
 # This function checks all root folders within the selected folder.
@@ -110,6 +115,8 @@ def printhelp():
     print ("-s, --simulate:    Simulates the operation, nothing is deleted or moved")
     print ("-v, --verbose:     Verbosity on (lots of text will be printed, pass it to a log by ending")
     print ("                   the command with \" > log.txt\"")
+    print ("-f, --force-rmdir: Removes subdirectories below the various main directories, even if not empty")
+    print ("                   (there may be additional residual files besides those in the trash list)")
     print ("-d <dir>,")
     print ("--directory <dir>: Pass the working directory to the program with this argument.")
     print ("")
@@ -125,13 +132,14 @@ removefile = 0
 movefile = 0
 removepath = 0
 pathnotdel = 0
+forcermdir = False
 verbose = False
 simulate = False
 path = ""
 argument_list = sys.argv[1:]
 
-short_options = "hd:vs"
-long_options = ["help", "directory=", "verbose", "simulate"]
+short_options = "hd:fvs"
+long_options = ["help", "directory=", "force-rmdir", "verbose", "simulate"]
 
 try:
     arguments, values = getopt.getopt(argument_list, short_options, long_options)
@@ -149,8 +157,11 @@ for current_argument, current_value in arguments:
         print ("Enabling verbose mode")
         verbose = True
     if current_argument in ("-s", "--simulate"):
-        print("Simulating operateion")
+        print("Simulating operation")
         simulate = True
+    if current_argument in ("-f", "--force-rmdir"):
+        print("Forcing removal of subdirectories")
+        forcermdir = True
     elif current_argument in ("-h", "--help"):
         printhelp()     
         sys.exit(2)
