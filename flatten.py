@@ -3,12 +3,13 @@ from pathlib import Path
 import json
 import shutil
 
+
 def getConfig() -> dict:
 # This function reads the trash file extensions from JSON
     thisdir = os.path.dirname(__file__)
     with open(os.path.abspath(os.path.join(thisdir,'flatten-config.json')), 'r') as config:
         data = config.read()
-    
+
     settings = json.loads(data)    
     configuration = settings
     return configuration
@@ -17,11 +18,10 @@ def printDirectoryFiles(directory: str, root: str):
     global removefile, movefile, removepath, pathnotdel, simulate, verbose, forcermdir
     rootdir = root
     extensions = getConfig()
-    #print("")
+    
     for filename in os.listdir(directory):  
         full_path=os.path.abspath(os.path.join(directory, filename))
         if not os.path.isdir(full_path):
-            #print(f"===> TESTING    : {full_path}")
             for i in extensions['remove-files']:
                 if Path(full_path).suffix == "."+i:
                     if not simulate:
@@ -34,6 +34,7 @@ def printDirectoryFiles(directory: str, root: str):
                     else:
                         print(f"--- Would remove file:\n    {full_path}")
                     removefile += 1
+                    
             for v in extensions['files-to-move']:
                 if Path(full_path).suffix == "."+v:
                     if not simulate:
@@ -47,7 +48,7 @@ def printDirectoryFiles(directory: str, root: str):
                         print(f">>> Would move file:\n    {full_path}\n    to {os.path.join(rootdir,os.path.basename(full_path))}")
                     movefile += 1
         else:
-            #if not os.listdir(full_path):
+            #if not os.listdir(full_path): (would only remove if dir is empty, now handled differently)
             if not simulate:
                 try:
                     print(f"--- Removing dir:\n    {full_path} (force: {forcermdir})")
@@ -63,9 +64,7 @@ def printDirectoryFiles(directory: str, root: str):
             else:
                 print(f"--- Would remove dir:\n    {full_path} (force: {forcermdir})")
                 removepath += 1
-            #else:
-                #print("!!! Not able to delete dir:\n{full_path} (dir is not empty)")
-                #pathnotdel += 1
+
 
 def checkFolders(directory: str):
 # This function checks all root folders within the selected folder.
@@ -73,13 +72,11 @@ def checkFolders(directory: str):
 #
 # The root variable makes sure that any video scenes recursively are moved to the main folder 
 # (the one directly below the defined starting directory).
-
+    global verbose
     dir_list = next(os.walk(directory))[1]
 
-    #print(dir_list)
-
     for dir in dir_list:           
-        print(f"\n*** Now in a new parent directory -> {dir}")
+        print(f"\n*** Now in a new parent directory -> {dir}") if verbose else print(f"\n*** Now in directory -> {dir}")
         root = os.path.abspath(os.path.join(directory,dir))
         checkSubFolders(os.path.abspath(os.path.join(directory,dir)), root) 
 
@@ -91,13 +88,11 @@ def checkSubFolders(directory: str, root: str):
 # To ensure that the files are moved to the first subfolder (read above), the original root is passed on.
 
     dir_list = next(os.walk(directory))[1]
-
-    #print(dir_list)
-
+    
     for dir in dir_list:           
-        print(f"\n*** Now in subdirectory -> {dir}")
+        if verbose: print(f"\n*** Now in subdirectory -> {dir}")
         checkSubFolders(directory +"/"+ dir, root) 
-
+        
     printDirectoryFiles(directory, root)       
 
 def printhelp():
@@ -127,7 +122,6 @@ def printhelp():
     print ("(will simulate traversal of /folder/xxxclips and print verbose output.")
     
     
-#global removefile, movefile, removepath
 removefile = 0
 movefile = 0
 removepath = 0
