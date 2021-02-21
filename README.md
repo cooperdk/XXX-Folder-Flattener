@@ -1,6 +1,6 @@
 # XXX Folder Flattener
 
-#### A utility to flatten adult video scene directories. Companion tool for [YAPO](https://github.com/cooperdk/YAPO-e-plus)
+#### A utility to flatten adult video scene directories. Companion tool for [YAPO](https://github.com/cooperdk/YAPO-e-plus) and other porn organizers
 
 #### Will work from an input directory and move all files below the parent subfolders to the parent subfolder, and delete any trash files (configurable in flatten-config.json)
 
