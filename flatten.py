@@ -109,7 +109,7 @@ def checkSubFolders (directory: str, root: str):
     :param root:
     :return:
     """
-
+    global verbose
     dir_list = next(os.walk(directory))[1]
 
     for dir in dir_list:
@@ -157,6 +157,7 @@ def main(args: list):
     pathnotdel = 0
     verbose = False
     simulate = False
+    forcermdir = False
     path = ""
     argument_list = args
 
