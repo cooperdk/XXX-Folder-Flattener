@@ -69,7 +69,7 @@ def printDirectoryFiles (directory: str, root: str):
                     else:
                         os.rmdir(full_path)
                     removepath += 1
-                except (IOError, OSerror) as exc:
+                except (IOError, OSError) as exc:
                     print(f"!!! Error: {exc}")
                     pathnotdel += 1
                     pass
