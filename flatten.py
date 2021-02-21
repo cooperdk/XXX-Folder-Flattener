@@ -124,8 +124,8 @@ def checkSubFolders (directory: str, root: str):
 def printhelp ():
     # Prints a help text
 
-    print("FLATTEN 0.6")
-    print("===========")
+    print("FLATTEN v0.7.2")
+    print("==============")
     print("")
     print("A utility to flatten adult video scene directories")
     print("Will work from an input directory and move all files below the parent subfolders")
