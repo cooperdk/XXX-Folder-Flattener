@@ -208,6 +208,4 @@ def main(args: list):
 
 
 if __name__ == "__main__":
-    print(sys.argv[1:])
-    quit()
     main(sys.argv[1:])
