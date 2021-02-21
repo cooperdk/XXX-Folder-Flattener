@@ -29,7 +29,7 @@ def printDirectoryFiles(directory: str, root: str):
                             print(f"--- Removing file:\n{full_path}")
                             os.remove(full_path)
                         except IOError as exc:
-                            print(f"!!!Error: {exc}")
+                            print(f"!!! Error: {exc}")
                             pass
                     else:
                         print(f"--- Would remove file:\n{full_path}")
@@ -41,7 +41,7 @@ def printDirectoryFiles(directory: str, root: str):
                             print(f">>> Moving file:\n{full_path}\nto {os.path.join(rootdir,os.path.basename(full_path))}")
                             shutil.move(full_path, os.path.join(rootdir,os.path.basename(full_path)))
                         except OSError as exc:
-                            print(f"!!!Error: {exc}")
+                            print(f"!!! Error: {exc}")
                             pass                   
                     else:
                         print(f">>> Would move file:\n{full_path}\nto {os.path.join(rootdir,os.path.basename(full_path))}")
@@ -53,13 +53,13 @@ def printDirectoryFiles(directory: str, root: str):
                         print(f"--- Removing dir:\n{full_path}")
                         os.rmdir(full_path)
                     except IOError as exc:
-                        print(f"!!!Error: {exc}")
+                        print(f"!!! Error: {exc}")
                         pass
                 else:
                     print(f"--- Would remove dir:\n{full_path}")
                 removepath += 1
             else:
-                print("!!! Not able to delete dir:\n{full_path} (dir is not empty)")
+                print("!!! Warn: Not able to delete dir:\n{full_path} (dir is not empty)")
                 pathnotdel += 1
 
 def checkFolders(directory: str):
