@@ -12,7 +12,7 @@ Will work from an input directory and move all files below the parent subfolders
 
 -v, --verbose: Verbosity on (lots of text will be printed, pass it to a log by ending the command with " > log.txt"
 
--d <dir>, --directory <dir>: Pass the working directory to the program with this argument.
+-d (dir), --directory (dir): Pass the working directory to the program with this argument.
   
 ## EXAMPLE:
 
