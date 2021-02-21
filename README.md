@@ -14,6 +14,8 @@
 
 -v, --verbose: Verbosity on (lots of text will be printed, pass it to a log by ending the command with " > log.txt"
 
+-f, --force-rmdir: Removes subdirectories below the various main directories, even if not empty (there may be additional residual files besides those in the trash list)
+
 -d (dir), --directory (dir): Pass the working directory to the program with this argument.
   
 ## EXAMPLE:
