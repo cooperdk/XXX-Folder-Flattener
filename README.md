@@ -21,14 +21,16 @@
 ## EXAMPLE:
 
 
-`flatten -s -v -d /folder/xxxclips`
+`flatten -v -d /folder/xxxclips`
 
 (will simulate traversal of /folder/xxxclips and print verbose output.
 
+Any files within subdirectories of /folder/xxxclips will be moved to that subdirectory.
 
-Some functionality not yet done, verbosity will print out a huge load of text.
+For example, if you have a folder named /folder/xxxclips/ALSScan and this folder has ten subfolders each with a video file and a .txt and .nfo file, Flatten will remove the .txt and .nfo file and move the video file of each directory to /folder/xxxclips/ALSScan. The subdirectories will be removed if empty (if you had added the -f parameter, it would remove the folder even if there are additional files within them).
+For each operation, this command would print the action taken.
 
-The utility prints statistics when done.
+The utility prints statistics when done (files moved and files/directories deleted, as well as disk space saved by file deletion).
 
 ### Calling from Python application
 
@@ -36,8 +38,8 @@ Send the command line parameters to the utility's main function as a list. Like:
 
 ```
 import flatten
-x = flatten.main(['-s', '-v', '-d', '/folder/xxxclips'])
+x = flatten.main(['-v', '-d', '/folder/xxxclips'])
 ```
 
-Remember, if you're running on Windows, you must send the directory escaped (with double-backslashes).
+Remember, if you're running on Windows, you must pass the escaped path.
 
