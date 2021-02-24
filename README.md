@@ -10,7 +10,7 @@
 
 -h, --help: Prints this help text
 
--s, --simulate: Simulates the operation, nothing is deleted or moved
+-s, --simulate: Simulates the operation, nothing is deleted or moved. Run this first if unsure of what will happen
 
 -v, --verbose: Verbosity on (lots of text will be printed, pass it to a log by ending the command with " > log.txt"
 
