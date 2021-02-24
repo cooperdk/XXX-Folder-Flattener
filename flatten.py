@@ -129,7 +129,7 @@ def checkSubFolders (directory: str, root: str):
 def printhelp ():
     # Prints a help text
 
-    print("FLATTEN v0.7.2")
+    print("FLATTEN v0.7.5")
     print("==============")
     print("")
     print("A utility to flatten adult video scene directories")
