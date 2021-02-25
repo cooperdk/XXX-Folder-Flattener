@@ -1,20 +1,28 @@
-#!/usr/bin/python
-
-import os, sys, getopt
+#!/usr/bin/python3
+# pylint: disable=C0301
+"""
+flatten.py
+https://github.com/cooperdk/XXX-Folder-Flattener
+"""
+import os
+import sys
+import getopt
 from pathlib import Path
 import json
 import shutil
 
-def getConfig () -> dict:
-    # This function reads the trash file and allowed video file extensions from a JSON file
-
+def getconfig () -> dict:
+    """
+    This function reads the trash file and allowed video file extensions from a JSON file
+    :return:
+    """
     thisdir = os.path.dirname(__file__)
     with open(os.path.abspath(os.path.join(thisdir, 'flatten-config.json')), 'r') as config:
         data = config.read()
     return json.loads(data)
 
 
-def printDirectoryFiles (directory: str, root: str):
+def printdirfiles (directory: str, root: str):
     """
     This function works with the individual files and directories and decides, based on settings,
     what is going to happen to them
@@ -23,10 +31,11 @@ def printDirectoryFiles (directory: str, root: str):
     :param root:
     :return:
     """
-    global removefile, movefile, removepath, pathnotdel, simulate, verbose, forcermdir, rmsize, mvsize, corrsize
+    global removefile, movefile, removepath, pathnotdel, simulate, verbose, forcermdir,\
+           rmsize, mvsize, corrsize
     rootdir = root
     worksize = 0
-    extensions = getConfig()
+    extensions = getconfig()
 
     for filename in os.listdir(directory):
         sys.stdout.flush()
@@ -52,7 +61,8 @@ def printDirectoryFiles (directory: str, root: str):
                     if not simulate:
                         try:
                             print(
-                                f">>> Moving file:\n    {full_path}\n    to {os.path.join(rootdir, os.path.basename(full_path))}") \
+                                f">>> Moving file:\n    {full_path}\n    to "
+                                f"{os.path.join(rootdir, os.path.basename(full_path))}") \
                             if verbose else print("+",end="")
                             shutil.move(full_path, os.path.join(rootdir, os.path.basename(full_path)))
                         except OSError as exc:
@@ -60,17 +70,20 @@ def printDirectoryFiles (directory: str, root: str):
                             pass
                     else:
                         print(
-                            f">>> Would move file:\n    {full_path}\n    to {os.path.join(rootdir, os.path.basename(full_path))}") \
+                            f">>> Would move file:\n    {full_path}\n    to "
+                            f"{os.path.join(rootdir, os.path.basename(full_path))}") \
                             if verbose else print("+", end="")
                     mvsize += worksize
                     movefile += 1
                 elif Path(full_path).suffix == "." + v and (os.path.abspath(directory) == os.path.abspath(rootdir)):
-                    print(f"~~~ Not moving {full_path}\n    (already placed correctly)") if verbose else print("*",end="")
+                    print(f"~~~ Not moving {full_path}\n    "
+                          f"(already placed correctly)") if verbose else print("*",end="")
                     corrsize += worksize
         else:
             if not simulate:
                 try:
-                    print(f"--- Removing dir:\n    {full_path} (force: {forcermdir})") if verbose else print("#",end="")
+                    print(f"--- Removing dir:\n    {full_path} "
+                          f"(force: {forcermdir})") if verbose else print("#",end="")
                     if forcermdir:
                         shutil.rmtree(full_path)
                     else:
@@ -81,7 +94,8 @@ def printDirectoryFiles (directory: str, root: str):
                     pathnotdel += 1
                     pass
             else:
-                print(f"--- Would remove dir:\n    {full_path} (force: {forcermdir})") if verbose else print("#",end="")
+                print(f"--- Would remove dir:\n    {full_path} "
+                      f"(force: {forcermdir})") if verbose else print("#",end="")
                 removepath += 1
 
 
@@ -104,7 +118,7 @@ def checkFolders (directory: str):
         root = os.path.abspath(os.path.join(directory, dir))
         checkSubFolders(os.path.abspath(os.path.join(directory, dir)), root)
 
-        # printDirectoryFiles(directory)
+        # printdirfiles(directory)
 
 
 def checkSubFolders (directory: str, root: str):
@@ -123,7 +137,7 @@ def checkSubFolders (directory: str, root: str):
         if verbose: print(f"\n\n*** Now in subdirectory -> {dir}")
         checkSubFolders(directory + "/" + dir, root)
 
-    printDirectoryFiles(directory, root)
+    printdirfiles(directory, root)
 
 
 def printhelp ():
@@ -201,7 +215,8 @@ def main(args: list):
             print("Enabling verbose mode")
             verbose = True
         if current_argument in ("-l", "--legend"):
-            print("\nOperations legend\n=================\n\n+: Moved file\n-: Deleted trash file\n*: Not moved file (placed correctly)\n#: Removed directory\n")
+            print("\nOperations legend\n=================\n\n+: Moved file\n-: Deleted trash file\n"
+                  "*: Not moved file (placed correctly)\n#: Removed directory\n")
             forcermdir = True
             sys.exit(0)
         if current_argument in ("-s", "--simulate"):
