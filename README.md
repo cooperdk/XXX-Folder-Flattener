@@ -23,7 +23,7 @@
 
 `flatten -v -d /folder/xxxclips`
 
-(will simulate traversal of /folder/xxxclips and print verbose output.
+(will traverse /folder/xxxclips, doing its work and print verbose output (add -s to simulate).
 
 Any files within subdirectories of /folder/xxxclips will be moved to that subdirectory.
 
